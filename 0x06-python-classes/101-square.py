@@ -1,61 +1,72 @@
 #!/usr/bin/python3
-"""Coordinates of a square"""
+"""Singley Linked List"""""
 
 
-class Square:
-    """Private instance attribute: size
-    Instantiation with area and position method """
+class Node:
+    """Node class"""
 
-    def __init__(self, size=0, position=(0, 0)):
-        """Initializes attribute size """
-        self.size = size
-        self.position = position
-
-    def area(self):
-        """Calculate area of square"""
-        return (self.__size * self.__size)
+    def __init__(self, data, next_node=None):
+        """Defines a node of LL"""
+        self.data = data
+        self.next_node = next_node
 
     @property
-    def size(self):
-        """Getter for square"""
-        return self.__size
+    def data(self):
+        """data Getter"""
+        return self.__data
 
-    @size.setter
-    def size(self, value):
-        """Initializes attribute size """
-        if (type(value) is not int):
-            raise TypeError("size must be an integer")
-        if value < 0:
-            raise ValueError("size must be >= 0")
-        self.__size = value
+    @data.setter
+    def data(self, value):
+        """data Setter"""
+        if not isinstance(value, int):
+            raise TypeError('data must be an integer')
+        self.__data = value
 
     @property
-    def position(self):
-        """Getter for position"""
-        return self.__position
+    def next_node(self):
+        """next_node Getter"""
+        return self.__next_node
 
-    @position.setter
-    def position(self, value):
-        """Initializes attribute position"""
-        if len(value) is not 2:
-            raise TypeError("position must be a tuple of 2 positive integers")
-        if (type(value[0]) is not int or value[0] < 0):
-            raise TypeError("position must be a tuple of 2 positive integers")
-        if (type(value[1]) is not int or value[1] < 0):
-            raise TypeError("position must be a tuple of 2 positive integers")
-        self.__position = value
+    @next_node.setter
+    def next_node(self, value):
+        """next_node Setter"""
+        if value is not None and type(value) != Node:
+            raise TypeError('next_node must be a Node object')
+        self.__next_node = value
 
-    def my_print(self):
-        """Print method"""
-        print(self.__str__())
+
+class SinglyLinkedList:
+    """Singley Linked List class"""
+
+    def __init__(self):
+        """Initialize SSL class"""
+        self.head = None
 
     def __str__(self):
-        """Print representation of squares"""
-        if self.size == 0:
+        """To string method"""
+        result = ""
+        node = self.head
+        while node:
+            result += str(node.data) + '\n'
+            node = node.next_node
+        return result[:-1]
+
+    def sorted_insert(self, value):
+        """Inserts a new node at sorted position"""
+        new_node = Node(value)
+
+        if not self.head:
+            self.head = new_node
             return
-        else:
-            str = '\n' * self.__position[1]
-        for i in range(self.__size):
-            str += ' ' * self.position[0]
-            str += '#' * self.__size + '\n'
-        return str[:-1]
+
+        if value < self.head.data:
+            new_node.next_node = self.head
+            self.head = new_node
+            return
+
+        node = self.head
+        while node.next_node and node.next_node.data < value:
+            node = node.next_node
+        if node.next_node:
+            new_node.next_node = node.next_node
+        node.next_node = new_node
