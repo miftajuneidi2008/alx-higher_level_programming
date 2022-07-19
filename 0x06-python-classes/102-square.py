@@ -1,21 +1,45 @@
 #!/usr/bin/python3
-"""Magic class from a given ByteCode."""
-import math
+"""
+This module defines a Square class
+Its implements value and type checks for its attributes with area function
+"""
 
 
-class MagicClass:
-    """Initialization of the MagicClass."""
-    def __init__(self, radius=0):
-        """Initialization of the data."""
-        self._MagicClass__radius = 0
-        if type(radius) is not int and type(radius) is not float:
-            raise TypeError("radius must be a number")
-        self._MagicClass__radius = radius
+class Square:
+    """Square implementation
+    """
+    def __init__(self, size=0):
+        self.size = size
+
+    def __lt__(self, other):
+        return self.__size < other.size
+
+    def __le__(self, other):
+        return self.__size <= other.size
+
+    def __eq__(self, other):
+        return self.__size == other.size
+
+    def __ne__(self, other):
+        return self.__size != other.size
+
+    def __gt__(self, other):
+        return self.__size > other.size
+
+    def __ge__(self, other):
+        return self.__size >= other.size
+
+    @property
+    def size(self):
+        return self.__size
+
+    @size.setter
+    def size(self, size):
+        if type(size) != int:
+            raise TypeError('size must be an integer')
+        elif size < 0:
+            raise ValueError('size must be >= 0')
+        self.__size = size
 
     def area(self):
-        """Calculation of the area."""
-        return self._MagicClass__radius ** 2 * math.pi
-
-    def circumference(self):
-        """Calculation of the circumference."""
-        return 2 * math.pi * self._MagicClass__radius
+        return (self.__size ** 2)
