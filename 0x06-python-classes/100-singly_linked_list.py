@@ -1,69 +1,72 @@
 #!/usr/bin/python3
-"""
-This module defines a Singly linked list
-"""
+"""Singley Linked List"""""
 
 
 class Node:
+    """Node class"""
+
     def __init__(self, data, next_node=None):
-        """Defines a node for a singly linked list
-        """
+        """Defines a node of LL"""
         self.data = data
         self.next_node = next_node
 
     @property
     def data(self):
+        """data Getter"""
         return self.__data
 
     @data.setter
     def data(self, value):
-        if type(value) != int:
+        """data Setter"""
+        if not isinstance(value, int):
             raise TypeError('data must be an integer')
-
         self.__data = value
 
     @property
     def next_node(self):
+        """next_node Getter"""
         return self.__next_node
 
     @next_node.setter
     def next_node(self, value):
+        """next_node Setter"""
         if value is not None and type(value) != Node:
             raise TypeError('next_node must be a Node object')
         self.__next_node = value
 
 
 class SinglyLinkedList:
+    """Singley Linked List class"""
+
     def __init__(self):
-        """Defines the singly linked list
-        """
-        self.__head = None
+        """Initialize SSL class"""
+        self.head = None
+
+    def __str__(self):
+        """To string method"""
+        result = ""
+        node = self.head
+        while node:
+            result += str(node.data) + '\n'
+            node = node.next_node
+        return result[:-1]
 
     def sorted_insert(self, value):
-        if self.__head is None:
-            self.__head = Node(value)
-        else:
-            current = self.__head
-            previous = None
-            while current and value > current.data:
-                previous = current
-                current = current.next_node
-            if current is None:
-                previous.next_node = Node(value)
-            elif current is self.__head and previous is None:
-                self.__head = Node(value, current)
-            else:
-                newNode = Node(value, current)
-                previous.next_node = newNode
+        """Inserts a new node at sorted position"""
+        new_node = Node(value)
 
-    def __repr__(self):
-        node = self.__head
-        txt = ''
-        while 1:
-            txt += str(node.data)
+        if not self.head:
+            self.head = new_node
+            return
+
+        if value < self.head.data:
+            new_node.next_node = self.head
+            self.head = new_node
+            return
+
+        node = self.head
+        while node.next_node and node.next_node.data < value:
             node = node.next_node
-            if node.next_node is None:
-                break
-            else:
-                txt += '\n'
-        return txt
+        if node.next_node:
+            new_node.next_node = node.next_node
+        node.next_node = new_node
