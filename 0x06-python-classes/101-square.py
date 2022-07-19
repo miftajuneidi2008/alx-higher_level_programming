@@ -1,67 +1,61 @@
 #!/usr/bin/python3
-"""
-This module defines a Square class
-Its implements value and type checks for its attributes
-Attributes:
-    area
-    my_print
-"""
+"""Coordinates of a square"""
 
 
 class Square:
-    """Square implementation
-    """
+    """Private instance attribute: size
+    Instantiation with area and position method """
+
     def __init__(self, size=0, position=(0, 0)):
+        """Initializes attribute size """
         self.size = size
         self.position = position
 
-    def __str__(self):
-
-        txt = ''
-        if (self.__size == 0):
-            pass
-        else:
-            for i in range(self.position[1]):
-                txt += '\n'
-
-            for i in range(self.size):
-                txt += ' ' * self.position[0] + '#' * self.size
-
-        return txt
+    def area(self):
+        """Calculate area of square"""
+        return (self.__size * self.__size)
 
     @property
     def size(self):
+        """Getter for square"""
         return self.__size
 
     @size.setter
-    def size(self, size):
-        if type(size) != int:
-            raise TypeError('size must be an integer')
-        elif size < 0:
-            raise ValueError('size must be >= 0')
-        self.__size = size
-
-    def area(self):
-        """calculates the square area
-        """
-        return (self.size ** 2)
-
-    def my_print(self):
-        """prints a square  with the corresponding size
-        """
-        print(self.__str__())
+    def size(self, value):
+        """Initializes attribute size """
+        if (type(value) is not int):
+            raise TypeError("size must be an integer")
+        if value < 0:
+            raise ValueError("size must be >= 0")
+        self.__size = value
 
     @property
     def position(self):
+        """Getter for position"""
         return self.__position
 
     @position.setter
-    def position(self, position):
-        if type(position) != tuple or \
-            len(position) != 2 or \
-            not all(isinstance(el, int) for el in position) or \
-                not all(el >= 0 for el in position):
+    def position(self, value):
+        """Initializes attribute position"""
+        if len(value) is not 2:
+            raise TypeError("position must be a tuple of 2 positive integers")
+        if (type(value[0]) is not int or value[0] < 0):
+            raise TypeError("position must be a tuple of 2 positive integers")
+        if (type(value[1]) is not int or value[1] < 0):
+            raise TypeError("position must be a tuple of 2 positive integers")
+        self.__position = value
 
-            raise TypeError('position must be a tuple of 2 positive integers')
+    def my_print(self):
+        """Print method"""
+        print(self.__str__())
 
-        self.__position = position
+    def __str__(self):
+        """Print representation of squares"""
+        if self.size == 0:
+            return
+        else:
+            str = '\n' * self.__position[1]
+        for i in range(self.__size):
+            str += ' ' * self.position[0]
+            str += '#' * self.__size + '\n'
+        return str[:-1]
