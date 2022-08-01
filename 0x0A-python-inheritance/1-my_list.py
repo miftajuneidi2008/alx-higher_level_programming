@@ -1,14 +1,9 @@
 #!/usr/bin/python3
-"""
-This module implements a custom list object
-"""
+"""This module defines the class MyList"""
 
 
 class MyList(list):
-    """Custom List
-    """
+    """Class MyList inherits from list"""
     def print_sorted(self):
-        """
-        prints the list, but sorted (ascending sort)
-        """
+        """Prints list in ascending sorted order"""
         print(sorted(self))
