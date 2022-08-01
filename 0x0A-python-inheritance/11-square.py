@@ -1,24 +1,16 @@
 #!/usr/bin/python3
-"""
-This module implements a Square object
-"""
-
-
+"""This module creates class Rectangle which inherits from BaseGeometry"""
 Rectangle = __import__('9-rectangle').Rectangle
 
 
 class Square(Rectangle):
+    """Class Square inherits from Rectangle"""
     def __init__(self, size):
-        """initialization
-        Args:
-            size (int): size
-        """
+        """Instantiate private instance field size"""
+        super().integer_validator("size", size)
         super().__init__(size, size)
         self.__size = size
 
     def __str__(self):
-        """string representation
-        Returns:
-            str: string
-        """
+        """Returns 'unofficial' representation of Square instance"""
         return "[Square] {:d}/{:d}".format(self.__size, self.__size)
