@@ -1,8 +1,7 @@
 #!/usr/bin/node
-
+/* File to append */
 const fs = require('fs');
-
-const fileA = fs.readFileSync(process.argv[2], 'utf8');
-const fileB = fs.readFileSync(process.argv[3], 'utf8');
-
-fs.writeFileSync(process.argv[4], fileA + fileB);
+const path = './';
+const contentFileA = fs.readFileSync(path + process.argv[2], 'utf-8');
+const contentFileB = fs.readFileSync(path + process.argv[3], 'utf-8');
+fs.writeFileSync(process.argv[4], contentFileA + contentFileB);
