@@ -1,18 +1,19 @@
 #!/usr/bin/python3
-"""Python script that takes in a letter and sends a POST request to
-http://0.0.0.0:5000/search_user with the letter as a parameter."""
-
-import requests
-from sys import argv
-
+# Task 8. Search API
 if __name__ == "__main__":
-    data = {"q": argv[1] if len(argv) > 1 else ""}
-    request = requests.post("http://0.0.0.0:5000/search_user", data=data)
+    import sys
+    import requests
+    the_url = "http://0.0.0.0:5000/search_user"
+    if len(sys.argv) > 1:
+        the_letter = {"q": sys.argv[1]}
+    else:
+        the_letter = {'q': ""}
+    my_req = requests.post(the_url, the_letter)
     try:
-        json = request.json()
-        if json:
-            print("[{}] {}".format(json.get("id"), json.get("name")))
-        else:
+        the_resp = my_req.json()
+        if not the_resp:
             print("No result")
+        else:
+            print("[{}] {}".format(the_resp.get('id'), the_resp.get('name')))
     except:
         print("Not a valid JSON")
